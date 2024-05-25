@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar-brand a {
+    text-decoration: none !important;
+    color: #000 !important;
+}
+nav .collapse {
+    visibility: visible;
+}
