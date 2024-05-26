@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Users;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -16,28 +17,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        $route = '';
-
-        if(is_null($user)){
-            /* ログインがない場合、ログイン画面へリダイレクト */
-            $route = 'login';
-        }else{
-            switch($user->type){
-                /* 管理者権限ユーザ */
-                case 1:
-                    $route = 'admin.home';
-                    break;
-                /* 一般権限ユーザ */
-                case 2:
-                    $route = 'dashboard';
-                    break;
-                default:
-                    $route = 'login';
-            }
-        }
-
-        return redirect()->intended(route($route));
+        return redirect()->intended(route('login'));
     }
 
     /**
@@ -56,8 +36,30 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $user = Auth::user();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $users = new Users();
+        $route = '';
+
+        if(is_null($user)){
+            /* ログインがない場合、ログイン画面へリダイレクト */
+            $route = 'login';
+        }else{
+            switch($user->type){
+                /* 管理者権限ユーザ */
+                case $users::USER_TYPE_ADMIN:
+                    $route = 'admin.home';
+                    break;
+                /* 一般権限ユーザ */
+                case $users::USER_TYPE_GENERAL:
+                    $route = 'dashboard';
+                    break;
+                default:
+                    $route = 'login';
+            }
+        }
+
+        return redirect()->intended(route($route, absolute: false));
     }
 
     /**
