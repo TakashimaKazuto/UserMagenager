@@ -12,7 +12,7 @@ return new class extends Migration
 	 */
 	public function up(): void
 	{
-		Schema::create('user_request', function (Blueprint $table) {
+		Schema::create('user_requests', function (Blueprint $table) {
 			$table->increments('id')->primary();;
 			$table->integer('user_id')->index();
 			$table->tinyInteger('status')->default(1);       //申請状況
@@ -27,6 +27,6 @@ return new class extends Migration
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('user_request');
+		Schema::dropIfExists('user_requests');
 	}
 };

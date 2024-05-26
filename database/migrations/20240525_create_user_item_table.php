@@ -12,7 +12,7 @@ return new class extends Migration
 	 */
 	public function up(): void
 	{
-		Schema::create('user_item', function (Blueprint $table) {
+		Schema::create('user_items', function (Blueprint $table) {
 			$table->increments('id')->primary();;
 			$table->integer('user_id')->index();
 			$table->integer('item_id')->index();
@@ -30,6 +30,6 @@ return new class extends Migration
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('user_item');
+		Schema::dropIfExists('user_items');
 	}
 };

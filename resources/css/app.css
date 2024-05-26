@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.hidden {
+    display: none;
+}
+
 .navbar-brand a {
     text-decoration: none !important;
     color: #000 !important;
@@ -14,8 +18,14 @@ tr.member-info:hover {
     cursor: pointer;
 }
 
-a.btn {
+.btn {
     width: 180px;
+}
+
+.required::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
 }
 
 table .w-1 {

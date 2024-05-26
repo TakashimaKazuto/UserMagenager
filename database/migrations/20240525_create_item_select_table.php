@@ -12,11 +12,10 @@ return new class extends Migration
 	 */
 	public function up(): void
 	{
-		Schema::create('item_select', function (Blueprint $table) {
+		Schema::create('item_selects', function (Blueprint $table) {
 			$table->increments('id')->primary();;
 			$table->integer('item_id');
-			$table->string('name', 20);            //選択肢名
-			$table->string('description', 100);    //選択肢説明
+			$table->string('name', 20);
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
 
@@ -29,6 +28,6 @@ return new class extends Migration
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('item_select');
+		Schema::dropIfExists('item_selects');
 	}
 };

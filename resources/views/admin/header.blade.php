@@ -10,7 +10,7 @@
                     <a class="nav-link {{ ($page === 'member') ? 'active' : '' }}" href="{{ route('admin.member') }}">メンバー管理</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">項目管理</a>
+                    <a class="nav-link {{ ($page === 'item') ? 'active' : '' }}" href="{{ route('admin.item') }}">項目管理</a>
                 </li>
             </ul>
 
