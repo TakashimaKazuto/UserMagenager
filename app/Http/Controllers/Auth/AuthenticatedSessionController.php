@@ -52,7 +52,7 @@ class AuthenticatedSessionController extends Controller
                     break;
                 /* 一般権限ユーザ */
                 case $users::USER_TYPE_GENERAL:
-                    $route = 'dashboard';
+                    $route = 'general.home';
                     break;
                 default:
                     $route = 'login';

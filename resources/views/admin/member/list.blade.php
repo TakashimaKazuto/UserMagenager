@@ -11,8 +11,9 @@
             <thead>
                 <tr>
                     <th class="w-2">アカウント</th>
-                    <th class="w-5">氏名</th>
-                    <th class="w-3">申請</th>
+                    <th class="w-4">氏名</th>
+                    <th class="w-2">権限</th>
+                    <th class="w-2">申請</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +21,7 @@
                 <tr class="member-info" data-member-id="{{ $member->id }}">
                     <td>{{ $member->name }}</td>
                     <td>{{ $member->last_name }} {{ $member->first_name }}</td>
+                    <td>{{ $users::USER_TYPE_LIST[$member->type] }}</td>
                     <td></td>
                 </tr>
                 @endforeach

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +12,7 @@ use App\Models\Item;
 use App\Models\ItemSelect;
 use App\Http\Requests\Admin\ItemRequest;
 
-class AdminItemController extends Controller
+class AdminItemController extends AdminController
 {
     public $page = 'item';
 

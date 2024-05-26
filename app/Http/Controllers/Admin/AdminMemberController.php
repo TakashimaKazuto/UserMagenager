@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,7 @@ use App\Models\UserItem;
 use App\Http\Requests\Admin\CreateMemberRequest;
 use App\Http\Requests\Admin\UpdateMemberRequest;
 
-class AdminMemberController extends Controller
+class AdminMemberController extends AdminController
 {
     public $page = 'member';
 
@@ -28,7 +29,7 @@ class AdminMemberController extends Controller
 
         $page = $this->page;
 
-        return view('admin.member.list', compact('page', 'member_list'));
+        return view('admin.member.list', compact('page', 'users', 'member_list'));
     }
 
     /**

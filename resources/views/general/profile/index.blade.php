@@ -1,20 +1,10 @@
-@extends('admin.layout')
+@extends('general.layout')
 
-@section('admin.part')
+@section('general.part')
 <div class="container">
-    <div class="d-flex justify-content-between mt-4">
+    <div class="d-flex justify-content-end mt-4">
         <div>
-            <a class="btn btn-outline-secondary" href="{{ route('admin.member') }}">戻る</a>
-        </div>
-        <div>
-            @if(Auth::user()->id != $member->id)
-            <form method="POST" action="{{ route('admin.member.delete') }}">
-                @csrf
-                <input type="hidden" name="member_id" value="{{ $member->id }}">
-                <button type="submit" class="btn btn-outline-danger mr-3">削除</button>
-            </form>
-            @endif
-            <a class="btn btn-outline-primary" href="{{ route('admin.member.edit', ['member_id' => $member->id]) }}">編集</a>
+            <a class="btn btn-outline-primary" href="{{ route('general.profile.edit') }}">変更</a>
         </div>
     </div>
 
@@ -22,15 +12,11 @@
         <table class="table table-bordered">
             <tr>
                 <th class="w-3 align-middle">アカウント</th>
-                <td class="w-7 align-middle">{{ $member->name }}</td>
+                <td class="w-7 align-middle">{{ $user->name }}</td>
             </tr>
             <tr>
                 <th class="align-middle">氏名</th>
-                <td class="align-middle">{{ $member->last_name }} {{ $member->first_name }}</td>
-            </tr>
-            <tr>
-                <th class="align-middle">権限</th>
-                <td class="align-middle">{{ $users::USER_TYPE_LIST[$member->type] }}</td>
+                <td class="align-middle">{{ $user->last_name }} {{ $user->first_name }}</td>
             </tr>
             @foreach($item_list as $item)
             <tr>
