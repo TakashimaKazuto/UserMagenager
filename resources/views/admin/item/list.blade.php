@@ -24,9 +24,8 @@
                     <td  class="align-middle">
                         <span>{{ $items::ITEM_TYPE_LIST[$item->type] }}</span>
                         @if($item->type == $items::ITEM_TYPE_SELECT)
-                            @php ($selects = explode(',', $item->selects))
-                            @foreach($selects as $select)
-                                <br><slan>・{{ $select }}</slan>
+                            @foreach($item->selects as $select)
+                                <br><slan>・{{ $select['item_select_name'] }}</slan>
                             @endforeach
                         @endif
                     </td>

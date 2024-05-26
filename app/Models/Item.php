@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Item extends Model
 {
@@ -32,4 +33,42 @@ class Item extends Model
         'type',
         'procedure',
     ];
+
+    public function getItemList()
+    {
+        $item_columns = [
+            'items.id',
+            'items.name',
+            'items.description',
+            'items.type',
+            'items.procedure',
+        ];
+        $items = DB::table('items')
+            ->select($item_columns)
+            ->selectRaw("group_concat(concat(item_selects.id, ':'), item_selects.name order by item_selects.id) selects")
+            ->leftjoin('item_selects', 'items.id', '=', 'item_selects.item_id')
+            ->orderBy('items.id', 'asc')
+            ->groupBy('items.id')
+            ->get();
+
+        $item_list = clone $items;
+        foreach($item_list as $item){
+            if($item->type == self::ITEM_TYPE_SELECT){
+                $select_list = [];
+
+                $selects = explode(',', $item->selects);
+                foreach($selects as $select){
+                    $tmp = explode(':', $select);
+                    $select_list[] = [
+                        'item_select_id'   => $tmp[0],
+                        'item_select_name' => $tmp[1],
+                    ];
+                }
+
+                $item->selects = $select_list;
+            }
+        }
+
+        return $item_list;
+    }
 }

@@ -7,8 +7,10 @@
             <a class="btn btn-outline-secondary" href="{{ route('admin.member') }}">戻る</a>
         </div>
         <div>
-            <a class="btn btn-outline-danger" href="#">削除</a>
-            <a class="btn btn-outline-primary ml-3" href="#">編集</a>
+            @if(Auth::user()->id != $member->id)
+            <a class="btn btn-outline-danger mr-3" href="#">削除</a>
+            @endif
+            <a class="btn btn-outline-primary" href="#">編集</a>
         </div>
     </div>
 
@@ -24,7 +26,7 @@
             </tr>
             <tr>
                 <th>権限</th>
-                <td>{{ $users::USER_TYPE_NAME_LIST[$member->type] }}</td>
+                <td>{{ $users::USER_TYPE_LIST[$member->type] }}</td>
             </tr>
         </table>
     </div>

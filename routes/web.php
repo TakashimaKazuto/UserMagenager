@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/home', [AdminHomeController::class, 'home'])->name('admin.home');
 
     Route::get('/admin/member', [AdminMemberController::class, 'list'])->name('admin.member');
+    Route::get('/admin/member/register', [AdminMemberController::class, 'register'])->name('admin.member.register');
+    Route::post('/admin/member/create', [AdminMemberController::class, 'create'])->name('admin.member.create');
     Route::get('/admin/member/detail/{member_id}', [AdminMemberController::class, 'detail'])->name('admin.member.detail');
 
     Route::get('/admin/item', [AdminItemController::class, 'list'])->name('admin.item');

@@ -11,13 +11,15 @@ class Users extends Model
 
     const USER_TYPE_ADMIN = 1;
     const USER_TYPE_GENERAL = 2;
-    const USER_TYPE_NAME_LIST = [
+    const USER_TYPE_LIST = [
         self::USER_TYPE_ADMIN => '管理者',
         self::USER_TYPE_GENERAL => '一般',
     ];
 
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
         'password',
         'type',
     ];

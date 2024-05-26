@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('password');
+            $table->string('password')->default('$2y$12$Kq2iUleSbV3iDz.xEGC74eYflVvJh4siDxJDdkGZOGKEoFea0.BA.');
             $table->tinyInteger('type');
             $table->rememberToken();
             $table->timestamp('created_at')->useCurrent();

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Models\Item;
@@ -22,21 +21,7 @@ class AdminItemController extends Controller
     public function list()
     {
         $items = new Item;
-        $item_columns = [
-            'items.id',
-            'items.name',
-            'items.description',
-            'items.type',
-            'items.procedure',
-        ];
-        $item_list = $items
-            ->select($item_columns)
-            ->selectRaw('group_concat(item_selects.name) selects')
-            ->distinct()
-            ->leftjoin('item_selects', 'items.id', '=', 'item_selects.item_id')
-            ->orderBy('items.id', 'asc')
-            ->groupBy('items.id')
-            ->get();
+        $item_list = $items->getItemList();
 
         $page = $this->page;
 
@@ -63,8 +48,8 @@ class AdminItemController extends Controller
         // バリデーション
         $request->validated();
 
-        $item = new Item;
-        $item_select = new ItemSelect;
+        $items = new Item;
+        $item_selects = new ItemSelect;
 
         $post = $request['item'];
 
@@ -72,17 +57,17 @@ class AdminItemController extends Controller
         DB::beginTransaction();
         try{
             // 項目を登録
-            $item->fill([
+            $items->fill([
                 'name'         => $post['name'],
                 'description'  => !is_null($post['description']) ? $post['description'] : '',
                 'type'         => $post['type'],
                 'procedure'    => $post['procedure'],
             ]);
-            $item->save();
-            $item_id = $item->id;
+            $items->save();
+            $item_id = $items->id;
 
             // 選択肢項目の場合は選択肢を登録
-            if($item->type == $item::ITEM_TYPE_SELECT){
+            if($items->type == $items::ITEM_TYPE_SELECT){
                 $select_array = [];
                 foreach($post['select'] as $select){
                     $select_array[] = [
@@ -90,12 +75,11 @@ class AdminItemController extends Controller
                         'name'    => $select,
                     ];
                 }
-                $item_select->insert($select_array);
+                $item_selects->insert($select_array);
             }
 
             DB::commit();
         }catch(\Exception $e){
-            dd($e);
             DB::rollback();
         }
 
