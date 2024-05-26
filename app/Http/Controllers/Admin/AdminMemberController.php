@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\Users;
 use App\Models\Item;
@@ -196,5 +197,25 @@ class AdminMemberController extends Controller
         }
 
         return redirect()->route('admin.member.detail', ['member_id' => $user_id]);
+    }
+
+    /**
+     * メンバー削除処理
+     */
+    public function delete(Request $request)
+    {
+        $users = new Users();
+        $member = $users->where('id', $request['member_id'])->first();
+        if(empty($member)){
+            return redirect()->route('admin.member');
+        }
+        // 自分のアカウントは削除できないように
+        if($member->id == Auth::user()->id){
+            return redirect()->route('admin.member');
+        }
+
+        $member->delete();
+
+        return redirect()->route('admin.member');
     }
 }

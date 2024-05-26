@@ -8,7 +8,10 @@
         </div>
         <div>
             @if(Auth::user()->id != $member->id)
-            <a class="btn btn-outline-danger mr-3" href="#">削除</a>
+            <form method="POST" action="{{ route('admin.member.delete') }}">
+                @csrf
+                <input type="hidden" name="member_id" value="{{ $member->id }}">
+                <button type="submit" class="btn btn-outline-danger mr-3">削除</button>
             @endif
             <a class="btn btn-outline-primary" href="{{ route('admin.member.edit', ['member_id' => $member->id]) }}">編集</a>
         </div>
