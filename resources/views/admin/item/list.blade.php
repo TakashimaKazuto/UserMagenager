@@ -25,7 +25,7 @@
                         <span>{{ $items::ITEM_TYPE_LIST[$item->type] }}</span>
                         @if($item->type == $items::ITEM_TYPE_SELECT)
                             @foreach($item->selects as $select)
-                                <br><slan>・{{ $select['item_select_name'] }}</slan>
+                                <br><slan>・{{ $select }}</slan>
                             @endforeach
                         @endif
                     </td>

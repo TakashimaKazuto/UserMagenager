@@ -59,10 +59,9 @@ class Item extends Model
                 $selects = explode(',', $item->selects);
                 foreach($selects as $select){
                     $tmp = explode(':', $select);
-                    $select_list[] = [
-                        'item_select_id'   => $tmp[0],
-                        'item_select_name' => $tmp[1],
-                    ];
+                    $select_id = $tmp[0];
+                    $select_value = $tmp[1];
+                    $select_list[$select_id] = $select_value;
                 }
 
                 $item->selects = $select_list;

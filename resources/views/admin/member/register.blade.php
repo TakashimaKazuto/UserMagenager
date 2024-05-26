@@ -69,8 +69,8 @@
                         @elseif($item->type == $items::ITEM_TYPE_SELECT)
                         <select name="user_item[{{ $item->id }}][item_select_id]" class="form-select">
                             <option value="">選択してください</option>
-                            @foreach($item->selects as $select)
-                            <option value="{{ $select['item_select_id'] }}" {{ old('user_item.'.$item->id.'.item_select_id') == $select['item_select_id'] ? 'selected' : '' }}>{{ $select['item_select_name'] }}</option>
+                            @foreach($item->selects as $select_id => $select)
+                            <option value="{{ $select_id }}" {{ old('user_item.'.$item->id.'.item_select_id') == $select_id ? 'selected' : '' }}>{{ $select }}</option>
                             @endforeach
                         </select>
                         @endif

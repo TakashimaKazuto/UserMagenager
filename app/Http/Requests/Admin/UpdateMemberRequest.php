@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Users;
 use App\Models\Item;
 
-class CreateMemberRequest extends FormRequest
+class UpdateMemberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,15 +18,7 @@ class CreateMemberRequest extends FormRequest
 
     public function rules(): array
     {
-        $users = new Users();
-        $type_rule = implode(',', [$users::USER_TYPE_ADMIN, $users::USER_TYPE_GENERAL]);
-
-        $rule = [
-            'name'       => 'required|max:10|alpha_num|unique:users',
-            'first_name' => 'required|max:10',
-            'last_name'  => 'required|max:10',
-            'type'       => "required|in:$type_rule",
-        ];
+        $rule = [];
 
         $items = new Item();
         $item_list = $items->getItemList();
@@ -72,27 +64,13 @@ class CreateMemberRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'       => ':attribute は必須です。',
-            'name.max'            => ':attribute は :max 文字以内です。',
-            'name.alpha_num'      => ':attribute は 英数字のみです。',
-            'name.unique'         => '入力された :attribute は既に使われています。。',
-            'last_name.required'  => ':attribute は必須です。',
-            'last_name.max'       => ':attribute は :max 文字以内です。',
-            'first_name.required' => ':attribute は必須です。',
-            'first_name.max'      => ':attribute は :max 文字以内です。',
-            'type.required'       => ':attribute は必須です。',
-            'type.in'             => ':attribute の値が不正です。',
-            'user_item.*'         => ':attribute の入力が間違っています。'
+            'user_item.*'  => ':attribute の入力が間違っています。'
         ];
     }
 
     public function attributes()
     {
         return [
-            'name'         => 'アカウント',
-            'last_name'    => '氏名（姓）',
-            'first_name'   => '氏名（名）',
-            'type'         => '権限',
             'user_item'    => '設定項目',
         ];
     }

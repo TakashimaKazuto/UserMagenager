@@ -11,6 +11,7 @@ use App\Models\Users;
 use App\Models\Item;
 use App\Models\UserItem;
 use App\Http\Requests\Admin\CreateMemberRequest;
+use App\Http\Requests\Admin\UpdateMemberRequest;
 
 class AdminMemberController extends Controller
 {
@@ -36,13 +37,20 @@ class AdminMemberController extends Controller
     {
         $users = new Users();
         $member = $users->where('id', $member_id)->first();
+        if(empty($member)){
+            return redirect()->route('admin.member');
+        }
 
         $items = new Item();
         $item_list = $items->getItemList();
+        $item_ids = $item_list->pluck('id')->toArray();
+
+        $user_items = new UserItem();
+        $user_item_list = $user_items->getUserItemList($member_id, $item_ids);
 
         $page = $this->page;
 
-        return view('admin.member.detail', compact('page', 'users', 'member', 'items', 'item_list'));
+        return view('admin.member.detail', compact('page', 'users', 'member', 'items', 'item_list', 'user_item_list'));
     }
 
     /**
@@ -87,10 +95,17 @@ class AdminMemberController extends Controller
 
             // ユーザ設定項目情報を登録
             if(!empty($request['user_item'])){
+                $default = [
+                    'string'         => '',
+                    'text'           => '',
+                    'number'         => null,
+                    'item_select_id' => null,
+                ];
                 $user_item_list = [];
                 foreach($request['user_item'] as $item_id => $user_item){
                     $user_item['user_id'] = $user_id;
                     $user_item['item_id'] = $item_id;
+                    $user_item = array_merge($default, $user_item);
                     $user_item_list[] = $user_item;
                 }
                 $user_items->insert($user_item_list);
@@ -98,7 +113,77 @@ class AdminMemberController extends Controller
 
             DB::commit();
         }catch(\Exception $e){
-            dd($e);
+            DB::rollback();
+            return redirect()->route('admin.member.register');
+        }
+
+        return redirect()->route('admin.member.detail', ['member_id' => $user_id]);
+    }
+
+    /**
+     * メンバー編集
+     */
+    public function edit($member_id)
+    {
+        $users = new Users();
+        $member = $users->where('id', $member_id)->first();
+        if(empty($member)){
+            return redirect()->route('admin.member');
+        }
+
+        $items = new Item();
+        $item_list = $items->getItemList();
+        $item_ids = $item_list->pluck('id')->toArray();
+
+        $user_items = new UserItem();
+        $user_item_list = $user_items->getUserItemList($member_id, $item_ids);
+
+        $page = $this->page;
+
+        return view('admin.member.edit', compact('page', 'users', 'member', 'items', 'item_list', 'user_item_list'));
+    }
+
+    /**
+     * メンバー更新処理
+     */
+    public function update(UpdateMemberRequest $request)
+    {
+        $users = new Users();
+        $member = $users->where('id', $request['member_id'])->first();
+        if(empty($member)){
+            return redirect()->route('admin.member');
+        }
+
+        // バリデーション
+        $request->validated();
+
+        $user_items = new UserItem();
+        $user_id = $member->id;
+
+        // 更新処理
+        DB::beginTransaction();
+        try{
+            // ユーザ設定項目情報を更新
+            if(!empty($request['user_item'])){
+                $default = [
+                    'string'         => '',
+                    'text'           => '',
+                    'number'         => null,
+                    'item_select_id' => null,
+                ];
+                $user_item_list = [];
+                foreach($request['user_item'] as $item_id => $user_item){
+                    $user_item['id'] = $user_item['id'];
+                    $user_item['user_id'] = $user_id;
+                    $user_item['item_id'] = $item_id;
+                    $user_item = array_merge($default, $user_item);
+                    $user_item_list[] = $user_item;
+                }
+                $user_items->upsert($user_item_list, ['id'], ['string', 'text', 'number', 'item_select_id']);
+            }
+
+            DB::commit();
+        }catch(\Exception $e){
             DB::rollback();
             return redirect()->route('admin.member.register');
         }
