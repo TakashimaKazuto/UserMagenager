@@ -13,9 +13,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         DB::table('users')->insert([
-            'name'     => 'admin',
-            'password' => '$2y$12$Kq2iUleSbV3iDz.xEGC74eYflVvJh4siDxJDdkGZOGKEoFea0.BA.', //"firsttime"
-            'type'     => 1
+            'name'       => 'admin',
+            'first_name' => '名前',
+            'last_name'  => '管理者',
+            'password'   => '$2y$12$Kq2iUleSbV3iDz.xEGC74eYflVvJh4siDxJDdkGZOGKEoFea0.BA.', //"firsttime"
+            'type'       => 1
         ]);
     }
 }

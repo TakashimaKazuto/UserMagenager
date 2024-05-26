@@ -9,3 +9,39 @@
 nav .collapse {
     visibility: visible;
 }
+
+tr.member-info:hover {
+    cursor: pointer;
+}
+
+a.btn {
+    width: 180px;
+}
+
+table .w-1 {
+    width:10%;
+}
+table .w-2 {
+    width:20%;
+}
+table .w-3 {
+    width:30%;
+}
+table .w-4 {
+    width:40%;
+}
+table .w-5 {
+    width:50%;
+}
+table .w-6 {
+    width:60%;
+}
+table .w-7 {
+    width:70%;
+}
+table .w-8 {
+    width:80%;
+}
+table .w-9 {
+    width:90%;
+}

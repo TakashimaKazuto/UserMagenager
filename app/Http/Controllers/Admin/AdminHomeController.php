@@ -10,8 +10,12 @@ use Illuminate\View\View;
 
 class AdminHomeController extends Controller
 {
+    public $page = 'page';
+
     public function home()
     {
-        return view('admin.home');
+        $page = $this->page;
+
+        return view('admin.home', compact('page'));
     }
 }

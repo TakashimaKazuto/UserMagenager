@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\admin\AdminHomeController;
+use App\Http\Controllers\admin\AdminMemberController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,7 +17,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    /** 管理者 */
     Route::get('/admin/home', [AdminHomeController::class, 'home'])->name('admin.home');
+    Route::get('/admin/member', [AdminMemberController::class, 'list'])->name('admin.member');
+    Route::get('/admin/member/detail/{member_id}', [AdminMemberController::class, 'detail'])->name('admin.member.detail');
 });
 
 require __DIR__.'/auth.php';
