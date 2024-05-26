@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/home', [AdminHomeController::class, 'home'])->name('admin.home');
     Route::get('/admin', function(){
         return redirect()->route('admin.home');
-    });
+    })->name('admin');
 
     Route::get('/admin/member', [AdminMemberController::class, 'list'])->name('admin.member');
     Route::get('/admin/member/register', [AdminMemberController::class, 'register'])->name('admin.member.register');
@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/general/home', [GeneralHomeController::class, 'home'])->name('general.home');
     Route::get('/general', function(){
         return redirect()->route('general.home');
-    });
+    })->name('general');
 
     Route::get('/general/profile', [GeneralProfileController::class, 'index'])->name('general.profile');
     Route::get('/general/profile/edit', [GeneralProfileController::class, 'edit'])->name('general.profile.edit');
