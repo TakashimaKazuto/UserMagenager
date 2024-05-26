@@ -18,7 +18,10 @@ class UpdateMemberRequest extends FormRequest
 
     public function rules(): array
     {
-        $rule = [];
+        $rule = [
+            'first_name' => 'required|max:10',
+            'last_name'  => 'required|max:10',
+        ];
 
         $items = new Item();
         $item_list = $items->getItemList();
@@ -64,13 +67,19 @@ class UpdateMemberRequest extends FormRequest
     public function messages()
     {
         return [
-            'user_item.*'  => ':attribute の入力が間違っています。'
+            'last_name.required'  => ':attribute は必須です。',
+            'last_name.max'       => ':attribute は :max 文字以内です。',
+            'first_name.required' => ':attribute は必須です。',
+            'first_name.max'      => ':attribute は :max 文字以内です。',
+            'user_item.*'         => ':attribute の入力が間違っています。',
         ];
     }
 
     public function attributes()
     {
         return [
+            'last_name'    => '氏名（姓）',
+            'first_name'   => '氏名（名）',
             'user_item'    => '設定項目',
         ];
     }

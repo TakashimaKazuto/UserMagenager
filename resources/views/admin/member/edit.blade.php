@@ -28,11 +28,13 @@
                     <td class="w-8 align-middle">{{ $member->name }}</td>
                 </tr>
                 <tr>
-                    <th class="align-middle">氏名</th>
+                    <th class="align-middle required">氏名</th>
                     <td class="align-middle">
-                        <div class="d-flex justify-content-left align-items-center">
-                            <span>{{ $member->last_name }}</span>
-                            <span class="ml-2">{{ $member->first_name }}</span>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="ml-2">姓：</span>
+                            <input type="text" name="last_name" value="{{ old('last_name', $member->last_name) }}" class="form-control">
+                            <span class="ml-2">名：</span>
+                            <input type="text" name="first_name" value="{{ old('first_name', $member->first_name) }}" class="form-control">
                         </div>
                     </td>
                 </tr>

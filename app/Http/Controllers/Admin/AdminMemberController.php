@@ -163,6 +163,13 @@ class AdminMemberController extends Controller
         // 更新処理
         DB::beginTransaction();
         try{
+            // ユーザ基本情報を更新
+            $users->where('id', $member->id)
+                ->update([
+                    'first_name' => $request['first_name'],
+                    'last_name'  => $request['last_name'],
+                ]);
+
             // ユーザ設定項目情報を更新
             if(!empty($request['user_item'])){
                 $default = [

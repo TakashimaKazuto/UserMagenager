@@ -75,14 +75,14 @@ class CreateMemberRequest extends FormRequest
             'name.required'       => ':attribute は必須です。',
             'name.max'            => ':attribute は :max 文字以内です。',
             'name.alpha_num'      => ':attribute は 英数字のみです。',
-            'name.unique'         => '入力された :attribute は既に使われています。。',
+            'name.unique'         => '入力された :attribute は既に使われています。',
             'last_name.required'  => ':attribute は必須です。',
             'last_name.max'       => ':attribute は :max 文字以内です。',
             'first_name.required' => ':attribute は必須です。',
             'first_name.max'      => ':attribute は :max 文字以内です。',
             'type.required'       => ':attribute は必須です。',
             'type.in'             => ':attribute の値が不正です。',
-            'user_item.*'         => ':attribute の入力が間違っています。'
+            'user_item.*'         => ':attribute の入力が間違っています。',
         ];
     }
 
