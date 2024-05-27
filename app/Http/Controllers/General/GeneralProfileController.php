@@ -38,9 +38,15 @@ class GeneralProfileController extends GeneralController
         $user_items = new UserItem();
         $user_item_list = $user_items->getUserItemList($user_id, $item_ids);
 
+        $user_request_item_list = [];
+        // 変更申請中の場合は申請中の内容を取得
+        if($has_active_request){
+            $user_request_item_list = $user_requests->getUserRequestItemList($user_id, $item_list);
+        }
+
         $page = $this->page;
 
-        return view('general.profile.index', compact('page', 'users', 'user', 'items', 'item_list', 'user_item_list', 'has_active_request'));
+        return view('general.profile.index', compact('page', 'users', 'user', 'items', 'item_list', 'user_item_list', 'has_active_request', 'user_request_item_list'));
     }
 
     /**
