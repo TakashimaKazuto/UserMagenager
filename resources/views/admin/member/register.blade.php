@@ -61,9 +61,7 @@
                         @if($item->type == $items::ITEM_TYPE_TEXT)
                         <input type="text" name="user_item[{{ $item->id }}][string]" value="{{ old('user_item.'.$item->id.'.string') }}" class="form-control">
                         @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
-                        <textarea name="user_item[{{ $item->id }}][text]" class="form-control">
-                            {{ old('user_item.'.$item->id.'.text') }}
-                        </textarea>
+                        <textarea name="user_item[{{ $item->id }}][text]" class="form-control">{{ old('user_item.'.$item->id.'.text') }}</textarea>
                         @elseif($item->type == $items::ITEM_TYPE_NUMBER)
                         <input type="number" name="user_item[{{ $item->id }}][number]" value="{{ old('user_item.'.$item->id.'.number') }}" class="form-control">
                         @elseif($item->type == $items::ITEM_TYPE_SELECT)

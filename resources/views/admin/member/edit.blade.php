@@ -57,9 +57,7 @@
                             <input type="text" name="user_item[{{ $item->id }}][string]" value="{{ old('user_item.'.$item->id.'.string', $user_item_value) }}" class="form-control">
                         @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
                             @php($user_item_value = isset($user_item_list[$item->id]->text) ? $user_item_list[$item->id]->text : null)
-                            <textarea name="user_item[{{ $item->id }}][text]" class="form-control">
-                                {{ old('user_item.'.$item->id.'.text', $user_item_value) }}
-                            </textarea>
+                            <textarea name="user_item[{{ $item->id }}][text]" class="form-control">{{ old('user_item.'.$item->id.'.text', $user_item_value) }}</textarea>
                         @elseif($item->type == $items::ITEM_TYPE_NUMBER)
                             @php($user_item_value = isset($user_item_list[$item->id]->number) ? $user_item_list[$item->id]->number : null)
                             <input type="number" name="user_item[{{ $item->id }}][number]" value="{{ old('user_item.'.$item->id.'.number', $user_item_value) }}" class="form-control">

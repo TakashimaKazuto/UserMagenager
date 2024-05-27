@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\General\GeneralController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Users;
 use App\Models\Item;
 use App\Models\UserItem;
+use App\Http\Requests\General\ProfileChangeRequestRequest;
 
 class GeneralProfileController extends GeneralController
 {
@@ -61,6 +63,45 @@ class GeneralProfileController extends GeneralController
     /**
      * プロファイル変更申請処理
      */
-    public function update()
-    {}
+    public function request(ProfileChangeRequestRequest $request)
+    {
+        $user_id = Auth::user()->id;
+
+        $users = new Users();
+        $user = $users->where('id', $user_id)->first();
+        if(empty($user)){
+            return redirect()->route('general');
+        }
+
+        $request->validated();
+
+        // 更新処理
+        DB::beginTransaction();
+        try{
+            // ユーザ設定項目情報を更新
+            if(!empty($request['user_item'])){
+                $default = [
+                    'string'         => '',
+                    'text'           => '',
+                    'number'         => null,
+                    'item_select_id' => null,
+                ];
+                $user_item_list = [];
+                foreach($request['user_item'] as $item_id => $user_item){
+                    $user_item['id'] = $user_item['id'];
+                    $user_item['user_id'] = $user_id;
+                    $user_item['item_id'] = $item_id;
+                    $user_item = array_merge($default, $user_item);
+                    $user_item_list[] = $user_item;
+                }
+            }
+
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+            return redirect()->route('general.profile.edit');
+        }
+
+        return redirect()->route('general.profile');
+    }
 }

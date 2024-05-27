@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/general/profile', [GeneralProfileController::class, 'index'])->name('general.profile');
     Route::get('/general/profile/edit', [GeneralProfileController::class, 'edit'])->name('general.profile.edit');
-    Route::get('/general/profile/update', [GeneralProfileController::class, 'update'])->name('general.profile.update');
+    Route::get('/general/profile/request', [GeneralProfileController::class, 'request'])->name('general.profile.request');
 });
 
 require __DIR__.'/auth.php';

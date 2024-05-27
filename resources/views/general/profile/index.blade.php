@@ -27,7 +27,7 @@
                         @if($item->type == $items::ITEM_TYPE_TEXT)
                             {{ $user_item->string }}
                         @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
-                            {!! nl2br(htmlspecialchars($item->text)) !!}
+                            {!! nl2br(htmlspecialchars($user_item->text)) !!}
                         @elseif($item->type == $items::ITEM_TYPE_NUMBER)
                             {{ $user_item->number }}
                         @elseif($item->type == $items::ITEM_TYPE_SELECT)

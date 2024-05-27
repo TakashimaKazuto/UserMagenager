@@ -8,7 +8,7 @@
         </div>
         <div>
             @if(Auth::user()->id != $member->id)
-            <form method="POST" action="{{ route('admin.member.delete') }}">
+            <form method="POST" action="{{ route('admin.member.delete') }}" class="d-inline">
                 @csrf
                 <input type="hidden" name="member_id" value="{{ $member->id }}">
                 <button type="submit" class="btn btn-outline-danger mr-3">削除</button>
@@ -41,7 +41,7 @@
                         @if($item->type == $items::ITEM_TYPE_TEXT)
                             {{ $user_item->string }}
                         @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
-                            {!! nl2br(htmlspecialchars($item->text)) !!}
+                            {!! nl2br(htmlspecialchars($user_item->text)) !!}
                         @elseif($item->type == $items::ITEM_TYPE_NUMBER)
                             {{ $user_item->number }}
                         @elseif($item->type == $items::ITEM_TYPE_SELECT)

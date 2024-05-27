@@ -22,7 +22,6 @@ return new class extends Migration
 			$table->text('text')->nullable();               //長文項目の入力値
 			$table->integer('number')->nullable();          //数値項目の入力値
 			$table->integer('item_select_id')->nullable();  //選択肢項目の入力値
-			$table->text('note')->nullable();               //備考
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
 		});

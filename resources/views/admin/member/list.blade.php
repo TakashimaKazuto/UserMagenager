@@ -3,7 +3,7 @@
 @section('admin.part')
 <div class="container">
     <div class="d-flex justify-content-end mt-4">
-        <a class="btn btn-outline-primary" href="{{ route('admin.member.register') }}">新規追加</a>
+        <a class="btn btn-outline-primary" href="{{ route('admin.member.register') }}">追加</a>
     </div>
 
     <div class="mt-5">
