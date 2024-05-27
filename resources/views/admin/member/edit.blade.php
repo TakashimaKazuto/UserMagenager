@@ -53,10 +53,10 @@
                         @php($user_item_id = isset($user_item_list[$item->id]->id) ? $user_item_list[$item->id]->id : null)
                         <input type="hidden" name="user_item[{{ $item->id }}][id]" value="{{ $user_item_id }}">
                         @if($item->type == $items::ITEM_TYPE_TEXT)
-                            @php($user_item_value = isset($user_item_list[$item->id]->string) ? $user_item_list[$item->id]->string : null)
+                            @php($user_item_value = isset($user_item_list[$item->id]->string) ? $user_item_list[$item->id]->string : '')
                             <input type="text" name="user_item[{{ $item->id }}][string]" value="{{ old('user_item.'.$item->id.'.string', $user_item_value) }}" class="form-control">
                         @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
-                            @php($user_item_value = isset($user_item_list[$item->id]->text) ? $user_item_list[$item->id]->text : null)
+                            @php($user_item_value = isset($user_item_list[$item->id]->text) ? $user_item_list[$item->id]->text : '')
                             <textarea name="user_item[{{ $item->id }}][text]" class="form-control">{{ old('user_item.'.$item->id.'.text', $user_item_value) }}</textarea>
                         @elseif($item->type == $items::ITEM_TYPE_NUMBER)
                             @php($user_item_value = isset($user_item_list[$item->id]->number) ? $user_item_list[$item->id]->number : null)

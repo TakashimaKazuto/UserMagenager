@@ -82,6 +82,7 @@ class AdminItemController extends AdminController
             DB::commit();
         }catch(\Exception $e){
             DB::rollback();
+            return redirect()->route('admin.item.register');
         }
 
         return redirect()->route('admin.item');

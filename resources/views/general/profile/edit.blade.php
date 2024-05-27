@@ -2,7 +2,7 @@
 
 @section('general.part')
 <div class="container">
-    <form method="POST" action="{{ route('general.profile.update') }}">
+    <form method="POST" action="{{ route('general.profile.request') }}">
         @csrf
         <input type="hidden" name="member_id" value="{{ $user->id }}">
         <div class="d-flex justify-content-between mt-4">
@@ -37,31 +37,50 @@
                     </td>
                 </tr>
                 @foreach($item_list as $item)
-                <tr>
-                    <th class="align-middle">{{ $item->name }}</th>
-                    <td class="align-middle">
-                        @php($user_item_id = isset($user_item_list[$item->id]->id) ? $user_item_list[$item->id]->id : null)
-                        <input type="hidden" name="user_item[{{ $item->id }}][id]" value="{{ $user_item_id }}">
-                        @if($item->type == $items::ITEM_TYPE_TEXT)
-                            @php($user_item_value = isset($user_item_list[$item->id]->string) ? $user_item_list[$item->id]->string : null)
-                            <input type="text" name="user_item[{{ $item->id }}][string]" value="{{ old('user_item.'.$item->id.'.string', $user_item_value) }}" class="form-control">
-                        @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
-                            @php($user_item_value = isset($user_item_list[$item->id]->text) ? $user_item_list[$item->id]->text : null)
-                            <textarea name="user_item[{{ $item->id }}][text]" class="form-control">{{ old('user_item.'.$item->id.'.text', $user_item_value) }}</textarea>
-                        @elseif($item->type == $items::ITEM_TYPE_NUMBER)
-                            @php($user_item_value = isset($user_item_list[$item->id]->number) ? $user_item_list[$item->id]->number : null)
-                            <input type="number" name="user_item[{{ $item->id }}][number]" value="{{ old('user_item.'.$item->id.'.number', $user_item_value) }}" class="form-control">
-                        @elseif($item->type == $items::ITEM_TYPE_SELECT)
-                        <select name="user_item[{{ $item->id }}][item_select_id]" class="form-select">
-                            <option value="">選択してください</option>
-                            @foreach($item->selects as $select_id => $select)
-                                @php($user_item_value = isset($user_item_list[$item->id]->item_select_id) ? $user_item_list[$item->id]->item_select_id : null)
-                                <option value="{{ $select_id }}" {{ old('user_item.'.$item->id.'.item_select_id', $user_item_value) == $select_id ? 'selected' : '' }}>{{ $select }}</option>
-                            @endforeach
-                        </select>
-                        @endif
-                    </td>
-                </tr>
+                    @if($item->procedure != $items::ITEM_PROCEDURE_HIDDEN)
+                    <tr>
+                        <th class="align-middle">{{ $item->name }}</th>
+                        <td class="align-middle">
+                            @if($item->procedure == $items::ITEM_PROCEDURE_EDITABLE)
+                                @php($user_item_id = isset($user_item_list[$item->id]->id) ? $user_item_list[$item->id]->id : null)
+                                <input type="hidden" name="user_item[{{ $item->id }}][user_item_id]" value="{{ $user_item_id }}">
+                                @if($item->type == $items::ITEM_TYPE_TEXT)
+                                    @php($user_item_value = isset($user_item_list[$item->id]->string) ? $user_item_list[$item->id]->string : '')
+                                    <input type="text" name="user_item[{{ $item->id }}][string]" value="{{ old('user_item.'.$item->id.'.string', $user_item_value) }}" class="form-control">
+                                @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
+                                    @php($user_item_value = isset($user_item_list[$item->id]->text) ? $user_item_list[$item->id]->text : '')
+                                    <textarea name="user_item[{{ $item->id }}][text]" class="form-control">{{ old('user_item.'.$item->id.'.text', $user_item_value) }}</textarea>
+                                @elseif($item->type == $items::ITEM_TYPE_NUMBER)
+                                    @php($user_item_value = isset($user_item_list[$item->id]->number) ? $user_item_list[$item->id]->number : null)
+                                    <input type="number" name="user_item[{{ $item->id }}][number]" value="{{ old('user_item.'.$item->id.'.number', $user_item_value) }}" class="form-control">
+                                @elseif($item->type == $items::ITEM_TYPE_SELECT)
+                                    <select name="user_item[{{ $item->id }}][item_select_id]" class="form-select">
+                                        <option value="">選択してください</option>
+                                        @foreach($item->selects as $select_id => $select)
+                                            @php($user_item_value = isset($user_item_list[$item->id]->item_select_id) ? $user_item_list[$item->id]->item_select_id : null)
+                                            <option value="{{ $select_id }}" {{ old('user_item.'.$item->id.'.item_select_id', $user_item_value) == $select_id ? 'selected' : '' }}>{{ $select }}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
+                            @elseif($item->procedure == $items::ITEM_PROCEDURE_READONLY)
+                                @if(isset($user_item_list[$item->id]))
+                                    @php($user_item = $user_item_list[$item->id])
+                                    @if($item->type == $items::ITEM_TYPE_TEXT)
+                                        {{ $user_item->string }}
+                                    @elseif($item->type == $items::ITEM_TYPE_TEXTAREA)
+                                        {!! nl2br(htmlspecialchars($user_item->text)) !!}
+                                    @elseif($item->type == $items::ITEM_TYPE_NUMBER)
+                                        {{ $user_item->number }}
+                                    @elseif($item->type == $items::ITEM_TYPE_SELECT)
+                                        @if(isset($item->selects[$user_item->item_select_id]))
+                                            {{ $item->selects[$user_item->item_select_id] }}
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+                        </td>
+                    </tr>
+                    @endif
                 @endforeach
             </table>
         </div>

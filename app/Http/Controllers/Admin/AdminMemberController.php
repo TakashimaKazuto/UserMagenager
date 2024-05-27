@@ -182,7 +182,6 @@ class AdminMemberController extends AdminController
                 ];
                 $user_item_list = [];
                 foreach($request['user_item'] as $item_id => $user_item){
-                    $user_item['id'] = $user_item['id'];
                     $user_item['user_id'] = $user_id;
                     $user_item['item_id'] = $item_id;
                     $user_item = array_merge($default, $user_item);
@@ -212,7 +211,7 @@ class AdminMemberController extends AdminController
         }
         // 自分のアカウントは削除できないように
         if($member->id == Auth::user()->id){
-            return redirect()->route('admin.member');
+            return redirect()->route('admin.member.edit');
         }
 
         $member->delete();

@@ -16,7 +16,6 @@ return new class extends Migration
 			$table->increments('id')->primary();;
 			$table->integer('user_id')->index();
 			$table->tinyInteger('status')->default(1);       //申請状況
-			$table->tinyInteger('noticed_flg')->default(0);  //申請結果通知済フラグ
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
 		});
