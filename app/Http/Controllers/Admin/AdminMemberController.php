@@ -12,6 +12,7 @@ use Illuminate\View\View;
 use App\Models\Users;
 use App\Models\Item;
 use App\Models\UserItem;
+use App\Models\UserRequest;
 use App\Http\Requests\Admin\CreateMemberRequest;
 use App\Http\Requests\Admin\UpdateMemberRequest;
 
@@ -25,11 +26,13 @@ class AdminMemberController extends AdminController
     public function list()
     {
         $users = new Users();
-        $member_list = $users->get();
+        $member_list = $users->getMemberList();
+
+        $user_requests = new UserRequest();
 
         $page = $this->page;
 
-        return view('admin.member.list', compact('page', 'users', 'member_list'));
+        return view('admin.member.list', compact('page', 'users', 'member_list', 'user_requests'));
     }
 
     /**
@@ -47,12 +50,21 @@ class AdminMemberController extends AdminController
         $item_list = $items->getItemList();
         $item_ids = $item_list->pluck('id')->toArray();
 
+
+        $user_requests = new UserRequest();
+        $has_active_request = $user_requests->checkActiveRequest($member_id);
+        $user_request_item_list = [];
+        // 変更申請中の場合は申請中の内容を取得
+        if($has_active_request){
+            $user_request_item_list = $user_requests->getUserRequestItemList($member_id);
+        }
+
         $user_items = new UserItem();
         $user_item_list = $user_items->getUserItemList($member_id, $item_ids);
 
         $page = $this->page;
 
-        return view('admin.member.detail', compact('page', 'users', 'member', 'items', 'item_list', 'user_item_list'));
+        return view('admin.member.detail', compact('page', 'users', 'member', 'items', 'item_list', 'user_item_list', 'user_requests', 'has_active_request', 'user_request_item_list'));
     }
 
     /**
@@ -131,6 +143,12 @@ class AdminMemberController extends AdminController
         $member = $users->where('id', $member_id)->first();
         if(empty($member)){
             return redirect()->route('admin.member');
+        }
+
+        $user_requests = new UserRequest();
+        $has_active_request = $user_requests->checkActiveRequest($member_id);
+        if($has_active_request){
+            return redirect()->route('admin.member.detail', ['member_id' => $member_id]);
         }
 
         $items = new Item();
@@ -217,5 +235,60 @@ class AdminMemberController extends AdminController
         $member->delete();
 
         return redirect()->route('admin.member');
+    }
+
+    /**
+     * 申請手続き
+     */
+    public function proccess(Request $request)
+    {
+        $users = new Users();
+        $member = $users->where('id', $request['member_id'])->first();
+        if(empty($member)){
+            return redirect()->route('admin.member');
+        }
+
+        $user_requests = new UserRequest();
+        $status_rule = implode(',', [$user_requests::REQUEST_STATUS_OK, $user_requests::REQUEST_STATUS_NG]);
+        $request->validate(['status' => "required|in:$status_rule"]);
+
+        $request_status = $request['status'];
+
+        // 更新処理
+        DB::beginTransaction();
+        try{
+            $user_request = $user_requests->where('user_id', $member->id)
+                ->where('status', $user_requests::REQUEST_STATUS_ACTIVE)
+                ->first();
+            $user_request_id = $user_request->id;
+
+            $user_items = new UserItem();
+            if($request_status == $user_requests::REQUEST_STATUS_OK){
+                $user_request_item_list = $user_requests->getUserRequestItemList($member->id);
+
+                foreach($user_request_item_list as $item_id => $request_item){
+                    $user_items->where('user_id', $member->id)
+                        ->where('item_id', $item_id)
+                        ->update([
+                            'user_id'        => $member->id,
+                            'item_id'        => $item_id,
+                            'string'         => $request_item->string,
+                            'text'           => $request_item->text,
+                            'number'         => $request_item->number,
+                            'item_select_id' => $request_item->item_select_id,
+                        ]);
+                }
+            }
+
+            $user_requests->where('id', $user_request_id)
+                ->update(['status' => $request_status]);
+
+            DB::commit();
+        }catch(\Exception $e){
+            DB::rollback();
+            return redirect()->route('admin.member.detail', ['member_id' => $member->id]);
+        }
+
+        return redirect()->route('admin.member.detail', ['member_id' => $member->id]);
     }
 }

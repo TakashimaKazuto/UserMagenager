@@ -22,7 +22,11 @@
                     <td>{{ $member->name }}</td>
                     <td>{{ $member->last_name }} {{ $member->first_name }}</td>
                     <td>{{ $users::USER_TYPE_LIST[$member->type] }}</td>
-                    <td></td>
+                    <td>
+                        @if($member->status == $user_requests::REQUEST_STATUS_ACTIVE)
+                            <span class="text-danger">変更申請中</span>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

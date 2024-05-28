@@ -41,7 +41,7 @@ class GeneralProfileController extends GeneralController
         $user_request_item_list = [];
         // 変更申請中の場合は申請中の内容を取得
         if($has_active_request){
-            $user_request_item_list = $user_requests->getUserRequestItemList($user_id, $item_list);
+            $user_request_item_list = $user_requests->getUserRequestItemList($user_id);
         }
 
         $page = $this->page;

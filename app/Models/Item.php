@@ -43,8 +43,7 @@ class Item extends Model
             'items.type',
             'items.procedure',
         ];
-        $items = DB::table('items')
-            ->select($item_columns)
+        $items = $this->select($item_columns)
             ->selectRaw("group_concat(concat(item_selects.id, ':'), item_selects.name order by item_selects.id) selects")
             ->leftjoin('item_selects', 'items.id', '=', 'item_selects.item_id')
             ->orderBy('items.id', 'asc')

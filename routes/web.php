@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/member/edit/{member_id}', [AdminMemberController::class, 'edit'])->name('admin.member.edit');
     Route::post('/admin/member/update', [AdminMemberController::class, 'update'])->name('admin.member.update');
     Route::post('/admin/member/delete', [AdminMemberController::class, 'delete'])->name('admin.member.delete');
+    Route::post('/admin/member/proccess', [AdminMemberController::class, 'proccess'])->name('admin.member.proccess');
 
     Route::get('/admin/item', [AdminItemController::class, 'list'])->name('admin.item');
     Route::get('/admin/item/register', [AdminItemController::class, 'register'])->name('admin.item.register');

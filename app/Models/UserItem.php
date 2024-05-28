@@ -23,8 +23,7 @@ class UserItem extends Model
 
     public function getUserItemList($user_id, $item_ids)
     {
-        $user_items = DB::table('user_items')
-            ->where('user_id', $user_id)
+        $user_items = $this->where('user_id', $user_id)
             ->whereIn('item_id', $item_ids)
             ->orderBy('user_id', 'asc')
             ->get();
