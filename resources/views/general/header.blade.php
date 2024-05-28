@@ -5,18 +5,21 @@
         </div>
 
         <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link {{ ($page === 'profile') ? 'active' : '' }}" href="{{ route('general.profile') }}">プロフィール</a>
                 </li>
-            </ul>
 
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-                    {{ __('LOG OUT') }}
-                </x-dropdown-link>
-            </form>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('password.edit') }}">パスワード変更</a>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" action="{{ route('logout') }}" name="logout">
+                        @csrf
+                        <a class="nav-link" href="javascript:logout.submit()">ログアウト</a>
+                    </form>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
