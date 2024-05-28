@@ -87,4 +87,23 @@ class AdminItemController extends AdminController
 
         return redirect()->route('admin.item');
     }
+
+    /**
+     * 項目削除処理
+     */
+    public function delete(Request $request)
+    {
+        $item_id = $request['item_id'];
+
+        $items = new Item();
+        $item = $items->where('id', $item_id)->first();
+        if(empty($item)){
+            return redirect()->route('admin.item');
+        }
+
+        // 削除
+        $item->delete();
+
+        return redirect()->route('admin.item');
+    }
 }

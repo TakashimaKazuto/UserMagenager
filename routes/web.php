@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/item', [AdminItemController::class, 'list'])->name('admin.item');
     Route::get('/admin/item/register', [AdminItemController::class, 'register'])->name('admin.item.register');
     Route::post('/admin/item/create', [AdminItemController::class, 'create'])->name('admin.item.create');
+    Route::post('/admin/item/delete', [AdminItemController::class, 'delete'])->name('admin.item.delete');
 
 
     /** 一般 */

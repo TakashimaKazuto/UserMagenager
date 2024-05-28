@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
+    use SoftDeletes;
+
     const ITEM_TYPE_TEXT = 1;
     const ITEM_TYPE_TEXTAREA = 2;
     const ITEM_TYPE_NUMBER = 3;

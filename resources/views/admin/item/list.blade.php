@@ -13,7 +13,8 @@
                     <th class="w-2">項目名</th>
                     <th class="w-4">説明</th>
                     <th class="w-2">項目タイプ</th>
-                    <th class="w-2">一般権限</th>
+                    <th class="w-1">一般権限</th>
+                    <th class="w-1"></th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +31,13 @@
                         @endif
                     </td>
                     <td  class="align-middle">{{ $items::ITEM_PROCEDURE_LIST[$item->procedure] }}</td>
+                    <td  class="align-middle">
+                        <form method="POST" action="{{ route('admin.item.delete') }}">
+                            @csrf
+                            <input type="hidden" name="item_id" value="{{ $item->id }}">
+                            <button type="submit" class="btn btn-outline-danger w-5">削除</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
