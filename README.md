@@ -62,3 +62,7 @@
 作成する機能を踏まえ、miroボードを利用し以下のようなER図を作成しました。
 ![ポートフォリオ設計 - ER](https://github.com/TakashimaKazuto/UserMagenager/assets/45586975/7083784b-cf83-4b7f-a15e-857cfea7a91a)
 
+## 開発期間
+### 2024/05/29時点
+- 設計：0.5日
+- 開発：約4日（就業時間外に）
