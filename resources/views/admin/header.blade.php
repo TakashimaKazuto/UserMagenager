@@ -4,9 +4,10 @@
             <a class="header-title" href="{{ route('admin.home') }}">人材管理システム（管理者）</a>
         </div>
 
-        <button type="button" class="navbar-toggler" data-toggle="collaspe" data-target="#navbarDropdown">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarDropdown">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
