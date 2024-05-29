@@ -42,7 +42,6 @@
                 <td class="align-middle">{{ $users::USER_TYPE_LIST[$member->type] }}</td>
             </tr>
             @foreach($item_list as $item)
-                @if($item->procedure != $items::ITEM_PROCEDURE_HIDDEN)
                 <tr>
                     <th class="align-middle">{{ $item->name }}</th>
                     <td class="align-middle">
@@ -79,7 +78,6 @@
                         @endif
                     </td>
                 </tr>
-                @endif
             @endforeach
         </table>
     </div>
