@@ -141,7 +141,7 @@ class AdminMemberController extends AdminController
     {
         $users = new Users();
         $member = $users->where('id', $member_id)->first();
-        if(empty($member)){
+        if(empty($member) || $member_id == users::MASTER_ADMIN_ID){
             return redirect()->route('admin.member');
         }
 
@@ -170,7 +170,7 @@ class AdminMemberController extends AdminController
     {
         $users = new Users();
         $member = $users->where('id', $request['member_id'])->first();
-        if(empty($member)){
+        if(empty($member) || $member->id == users::MASTER_ADMIN_ID){
             return redirect()->route('admin.member');
         }
 
@@ -224,7 +224,7 @@ class AdminMemberController extends AdminController
     {
         $users = new Users();
         $member = $users->where('id', $request['member_id'])->first();
-        if(empty($member)){
+        if(empty($member) || $member->id == users::MASTER_ADMIN_ID){
             return redirect()->route('admin.member');
         }
         // 自分のアカウントは削除できないように

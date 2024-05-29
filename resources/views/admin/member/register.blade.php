@@ -41,7 +41,7 @@
                 </tr>
                 <tr>
                     <th class="align-middle">パスワード</th>
-                    <td class="align-middle">初期パスワードが発行されます。</td>
+                    <td class="align-middle">初期パスワード"firsttime"が発行されます。</td>
                 </tr>
                 <tr>
                     <th class="align-middle required">権限</th>

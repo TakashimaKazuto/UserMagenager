@@ -11,6 +11,8 @@ class Users extends Model
 {
     use SoftDeletes;
 
+    const MASTER_ADMIN_ID = 1;
+
     const USER_TYPE_ADMIN = 1;
     const USER_TYPE_GENERAL = 2;
     const USER_TYPE_LIST = [

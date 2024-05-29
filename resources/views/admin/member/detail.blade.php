@@ -7,22 +7,25 @@
             <a class="btn btn-outline-secondary" href="{{ route('admin.member') }}">戻る</a>
         </div>
         <div>
-            @if(Auth::user()->id != $member->id)
-                <form method="POST" action="{{ route('admin.member.delete') }}" class="d-inline">
-                    @csrf
-                    <input type="hidden" name="member_id" value="{{ $member->id }}">
-                    <button type="submit" class="btn btn-outline-danger mr-3">削除</button>
-                </form>
-            @endif
-            @if($has_active_request)
-                <form method="POST" action="{{ route('admin.member.proccess') }}" class="d-inline">
-                    @csrf
-                    <input type="hidden" name="member_id" value="{{ $member->id }}">
-                    <button type="submit" name="status" value="{{ $user_requests::REQUEST_STATUS_NG }}" class="btn btn-outline-primary mr-3">変更申請却下</button>
-                    <button type="submit" name="status" value="{{ $user_requests::REQUEST_STATUS_OK }}" class="btn btn-outline-primary mr-3">変更申請許可</button>
-                </form>
-            @else
-                <a class="btn btn-outline-primary" href="{{ route('admin.member.edit', ['member_id' => $member->id]) }}">編集</a>
+            @if($member->id != $users::MASTER_ADMIN_ID)
+                @if(Auth::user()->id != $member->id)
+                    <form method="POST" action="{{ route('admin.member.delete') }}" class="d-inline">
+                        @csrf
+                        <input type="hidden" name="member_id" value="{{ $member->id }}">
+                        <button type="submit" class="btn btn-outline-danger mr-3">削除</button>
+                    </form>
+                @endif
+
+                @if($has_active_request)
+                    <form method="POST" action="{{ route('admin.member.proccess') }}" class="d-inline">
+                        @csrf
+                        <input type="hidden" name="member_id" value="{{ $member->id }}">
+                        <button type="submit" name="status" value="{{ $user_requests::REQUEST_STATUS_NG }}" class="btn btn-outline-primary mr-3">変更申請却下</button>
+                        <button type="submit" name="status" value="{{ $user_requests::REQUEST_STATUS_OK }}" class="btn btn-outline-primary mr-3">変更申請許可</button>
+                    </form>
+                @else
+                    <a class="btn btn-outline-primary" href="{{ route('admin.member.edit', ['member_id' => $member->id]) }}">編集</a>
+                @endif
             @endif
         </div>
     </div>
