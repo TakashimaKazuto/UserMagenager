@@ -27,14 +27,14 @@ class CreateMemberRequest extends FormRequest
             switch($item->type){
                 case $items::ITEM_TYPE_TEXT:
                     $target_key .= '.string';
-                    $target_rules = 'max:10';
+                    $target_rules = 'max:20';
                     $target_messages = [
                         $target_key.'.max' => ':attribute は :max 文字以内です。',
                     ];
                     break;
                 case $items::ITEM_TYPE_TEXTAREA:
                     $target_key .= '.text';
-                    $target_rules = 'max:50';
+                    $target_rules = 'max:200';
                     $target_messages = [
                         $target_key.'.max' => ':attribute は :max 文字以内です。',
                     ];
@@ -82,7 +82,7 @@ class CreateMemberRequest extends FormRequest
         $type_rule = implode(',', [$users::USER_TYPE_ADMIN, $users::USER_TYPE_GENERAL]);
 
         $rule = [
-            'name'       => 'required|max:10|alpha_num|unique:users',
+            'name'       => 'required|max:16|min:4|alpha_num|unique:users',
             'first_name' => 'required|max:10',
             'last_name'  => 'required|max:10',
             'type'       => "required|in:$type_rule",
@@ -98,6 +98,7 @@ class CreateMemberRequest extends FormRequest
         $message = [
             'name.required'       => ':attribute は必須です。',
             'name.max'            => ':attribute は :max 文字以内です。',
+            'name.min'            => ':attribute は :min 文字以内です。',
             'name.alpha_num'      => ':attribute は 英数字のみです。',
             'name.unique'         => '入力された :attribute は既に使われています。',
             'last_name.required'  => ':attribute は必須です。',

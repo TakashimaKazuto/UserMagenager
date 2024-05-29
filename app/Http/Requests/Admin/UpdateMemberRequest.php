@@ -27,14 +27,14 @@ class UpdateMemberRequest extends FormRequest
             switch($item->type){
                 case $items::ITEM_TYPE_TEXT:
                     $target_key .= '.string';
-                    $target_rules = 'max:10';
+                    $target_rules = 'max:20';
                     $target_messages = [
                         $target_key.'.max' => ':attribute は :max 文字以内です。',
                     ];
                     break;
                 case $items::ITEM_TYPE_TEXTAREA:
                     $target_key .= '.text';
-                    $target_rules = 'max:50';
+                    $target_rules = 'max:200';
                     $target_messages = [
                         $target_key.'.max' => ':attribute は :max 文字以内です。',
                     ];

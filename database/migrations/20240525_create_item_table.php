@@ -14,8 +14,8 @@ return new class extends Migration
 	{
 		Schema::create('items', function (Blueprint $table) {
 			$table->increments('id')->primary();
-			$table->string('name', 20);                      //項目名
-			$table->string('description', 100);              //項目説明
+			$table->string('name', 255);                     //項目名
+			$table->text('description')->nullable();         //項目説明
 			$table->tinyInteger('type');                     //項目種別
 			$table->tinyInteger('procedure');                //一般アカウントの編集権限
 			$table->timestamp('created_at')->useCurrent();

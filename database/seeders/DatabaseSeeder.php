@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name'       => 'admin',
-            'first_name' => '名前',
+            'first_name' => '',
             'last_name'  => '管理者',
             'password'   => '$2y$12$Kq2iUleSbV3iDz.xEGC74eYflVvJh4siDxJDdkGZOGKEoFea0.BA.', //"firsttime"
             'type'       => 1

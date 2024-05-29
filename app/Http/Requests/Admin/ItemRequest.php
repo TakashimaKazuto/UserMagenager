@@ -23,10 +23,10 @@ class ItemRequest extends FormRequest
         $select_required_rule = $item::ITEM_TYPE_SELECT;
 
         return [
-            'item.name'         => 'required|max:10',
-            'item.description'  => 'max:50',
+            'item.name'         => 'required|max:20',
+            'item.description'  => 'max:200',
             'item.type'         => "required|in:$type_rule",
-            'item.select.*'     => "required_if:item.type,$select_required_rule|max:10",
+            'item.select.*'     => "required_if:item.type,$select_required_rule|max:20",
             'item.procedure'    => "required|in:$procedure_rule",
         ];
     }

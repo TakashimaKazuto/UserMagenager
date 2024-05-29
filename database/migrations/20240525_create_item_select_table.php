@@ -15,7 +15,7 @@ return new class extends Migration
 		Schema::create('item_selects', function (Blueprint $table) {
 			$table->increments('id')->primary();;
 			$table->integer('item_id');
-			$table->string('name', 20);
+			$table->string('name', 255);
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrentOnUpdate()->nullable();
 
