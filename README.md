@@ -9,7 +9,7 @@ URL：https://tp-usermanager.sakura.ne.jp/UserManager/login
 - 管理者権限アカウント  
   ID:manager1  
   PW:testmanager  
-- 一般権限アカウント
+- 一般権限アカウント  
   ID:member1  
   PW:testmember  
 ## 概要
