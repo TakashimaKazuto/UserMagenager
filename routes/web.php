@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\admin\AdminHomeController;
-use App\Http\Controllers\admin\AdminMemberController;
-use App\Http\Controllers\admin\AdminItemController;
+use App\Http\Controllers\Admin\AdminHomeController;
+use App\Http\Controllers\Admin\AdminMemberController;
+use App\Http\Controllers\Admin\AdminItemController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\general\GeneralHomeController;
-use App\Http\Controllers\general\GeneralProfileController;
+use App\Http\Controllers\General\GeneralHomeController;
+use App\Http\Controllers\General\GeneralProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthenticatedSessionController::class, 'index']);
