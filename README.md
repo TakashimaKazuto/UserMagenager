@@ -7,11 +7,11 @@
 # サービス
 URL：https://tp-usermanager.sakura.ne.jp/UserManager/login  
 - 管理者権限アカウント  
-  ID:manager1
-  PW:testmanager
+  ID:manager1  
+  PW:testmanager  
 - 一般権限アカウント
-  ID:member1
-  PW:testmember
+  ID:member1  
+  PW:testmember  
 ## 概要
 メンバーのプロフィールを管理するシステムです。  
 管理者と一般アカウントの2種類に分けられ、各々以下の機能が使えます。  
