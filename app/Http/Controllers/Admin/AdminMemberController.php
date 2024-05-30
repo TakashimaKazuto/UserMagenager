@@ -248,6 +248,13 @@ class AdminMemberController extends AdminController
             return redirect()->route('admin.member');
         }
 
+        $items = new Item();
+        $item_list = $items->getItemList();
+        $item_ids = $item_list->pluck('id')->toArray();
+
+        $user_items = new UserItem();
+        $user_item_list = $user_items->getUserItemList($member->id, $item_ids);
+
         $user_requests = new UserRequest();
         $status_rule = implode(',', [$user_requests::REQUEST_STATUS_OK, $user_requests::REQUEST_STATUS_NG]);
         $request->validate(['status' => "required|in:$status_rule"]);
@@ -262,21 +269,25 @@ class AdminMemberController extends AdminController
                 ->first();
             $user_request_id = $user_request->id;
 
-            $user_items = new UserItem();
             if($request_status == $user_requests::REQUEST_STATUS_OK){
                 $user_request_item_list = $user_requests->getUserRequestItemList($member->id);
 
                 foreach($user_request_item_list as $item_id => $request_item){
-                    $user_items->where('user_id', $member->id)
-                        ->where('item_id', $item_id)
-                        ->update([
-                            'user_id'        => $member->id,
-                            'item_id'        => $item_id,
-                            'string'         => $request_item->string,
-                            'text'           => $request_item->text,
-                            'number'         => $request_item->number,
-                            'item_select_id' => $request_item->item_select_id,
-                        ]);
+                    $save_data = [
+                        'user_id'        => $member->id,
+                        'item_id'        => $item_id,
+                        'string'         => $request_item->string,
+                        'text'           => $request_item->text,
+                        'number'         => $request_item->number,
+                        'item_select_id' => $request_item->item_select_id,
+                    ];
+                    if(isset($user_item_list[$item_id])){
+                        $user_items->where('user_id', $member->id)
+                            ->where('item_id', $item_id)
+                            ->update($save_data);
+                    }else{
+                        $user_items->insert($save_data);
+                    }
                 }
             }
 

@@ -16,8 +16,8 @@ return new class extends Migration
 			$table->increments('id')->primary();;
 			$table->integer('user_id')->index();
 			$table->integer('item_id')->index();
-			$table->integer('user_item_id')->index();
 			$table->integer('user_request_id')->index();
+			$table->integer('user_item_id')->nullable();
 			$table->string('string', 255)->nullable();      //文字列項目の入力値
 			$table->text('text')->nullable();               //長文項目の入力値
 			$table->integer('number')->nullable();          //数値項目の入力値
